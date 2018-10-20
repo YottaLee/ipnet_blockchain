@@ -1,0 +1,212 @@
+================================================================================
+==== Node Report ===============================================================
+
+Event: exception, location: "OnUncaughtException"
+Filename: node-report.20181021.191210.27126.001.txt
+Dump event time:  2018/10/21 19:12:10
+Module load time: 2018/10/21 19:08:44
+Process ID: 27126
+Command line: node /Users/panxy/.nvm/versions/node/v8.12.0/bin/composer network start --networkName ipnet --networkVersion 0.0.5 --networkAdmin admin --networkAdminEnrollSecret adminpw --card PeerAdmin@hlfv1 --file networkadmin.card
+
+Node.js version: v8.12.0
+(http_parser: 2.8.0, v8: 6.2.414.66, uv: 1.19.2, zlib: 1.2.11, ares: 1.10.1-DEV,
+ modules: 57, nghttp2: 1.32.0, napi: 3, openssl: 1.0.2p, icu: 60.1, unicode: 10.0,
+ cldr: 32.0, tz: 2017c)
+
+node-report version: 2.2.1 (built against Node.js v8.12.0, 64 bit)
+
+OS version: Darwin 17.4.0 Darwin Kernel Version 17.4.0: Sun Dec 17 09:19:54 PST 2017; root:xnu-4570.41.2~1/RELEASE_X86_64
+
+Machine: 192.168.5.18 x86_64
+
+================================================================================
+==== JavaScript Stack Trace ====================================================
+
+WriteStream.emit (events.js:1:1)
+onwriteError (_stream_writable.js:1:1)
+onwrite (_stream_writable.js:1:1)
+_destroy (internal/streams/destroy.js:1:1)
+WriteStream.stderr._destroy (internal/process/stdio.js:1:1)
+WriteStream.destroy (internal/streams/destroy.js:1:1)
+WriteWrap.afterWrite [as oncomplete] (net.js:1:1)
+
+================================================================================
+==== Native Stack Trace ========================================================
+
+ 0: [pc=0x104cbc2d5] nodereport::OnUncaughtException(v8::Isolate*) [/Users/panxy/.nvm/versions/node/v8.12.0/lib/node_modules/composer-cli/node_modules/node-report/api.node]
+ 1: [pc=0x1005c5d93] v8::internal::Isolate::Throw(v8::internal::Object*, v8::internal::MessageLocation*) [/Users/panxy/.nvm/versions/node/v8.12.0/bin/node]
+ 2: [pc=0x10076d77b] v8::internal::Runtime_Throw(int, v8::internal::Object**, v8::internal::Isolate*) [/Users/panxy/.nvm/versions/node/v8.12.0/bin/node]
+ 3: [pc=0x4b6e7042fd] 
+
+================================================================================
+==== JavaScript Heap and Garbage Collector =====================================
+
+Heap space name: new_space
+    Memory size: 1,048,576 bytes, committed memory: 542,688 bytes
+    Capacity: 1,031,168 bytes, used: 529,816 bytes, available: 501,352 bytes
+Heap space name: old_space
+    Memory size: 33,878,016 bytes, committed memory: 32,447,736 bytes
+    Capacity: 32,359,816 bytes, used: 30,148,224 bytes, available: 2,211,592 bytes
+Heap space name: code_space
+    Memory size: 2,097,152 bytes, committed memory: 1,664,864 bytes
+    Capacity: 1,864,160 bytes, used: 1,499,008 bytes, available: 365,152 bytes
+Heap space name: map_space
+    Memory size: 4,214,784 bytes, committed memory: 4,055,672 bytes
+    Capacity: 2,376,936 bytes, used: 1,400,696 bytes, available: 976,240 bytes
+Heap space name: large_object_space
+    Memory size: 2,822,144 bytes, committed memory: 2,822,144 bytes
+    Capacity: 1,458,172,936 bytes, used: 2,778,632 bytes, available: 1,455,394,304 bytes
+
+Total heap memory size: 44,060,672 bytes
+Total heap committed memory: 41,533,104 bytes
+Total used heap memory: 36,356,376 bytes
+Total available heap memory: 1,459,448,640 bytes
+
+Heap memory limit: 1,501,560,832
+
+================================================================================
+==== Resource Usage ============================================================
+
+Process total resource usage:
+  User mode CPU: 2.065326 secs
+  Kernel mode CPU: 0.265638 secs
+  Average CPU Consumption : 1.13154%
+  Maximum resident set size: 123,635,499,008 bytes
+  Page faults: 11 (I/O required) 32950 (no I/O required)
+  Filesystem activity: 0 reads 0 writes
+
+================================================================================
+==== Node.js libuv Handle Summary ==============================================
+
+(Flags: R=Ref, A=Active)
+Flags  Type      Address             Details
+[-A]   async     0x0000000102500640  
+[--]   check     0x00007ffeefbfe7d8  
+[R-]   idle      0x00007ffeefbfe850  
+[--]   prepare   0x00007ffeefbfe8c8  
+[--]   check     0x00007ffeefbfe940  
+[-A]   async     0x000000010155da60  
+[R-]   timer     0x0000000102407a70  repeat: 0, timeout expired: 25458932 ms ago
+[R-]   tty       0x0000000102407208  width: 80, height: 24, file descriptor: 10, write queue size: 0, writable
+[-A]   signal    0x00000001023188b0  signum: 28 (SIGWINCH)
+[R-]   tty       0x0000000102318618  width: 80, height: 24, file descriptor: 12, write queue size: 0, writable
+[-A]   async     0x0000000104cc3f78  
+[-A]   signal    0x000000010241d420  signum: 6 (SIGABRT)
+[-A]   signal    0x000000010241fc20  signum: 14 (SIGALRM)
+[-A]   signal    0x000000010241fd10  signum: 1 (SIGHUP)
+[-A]   signal    0x000000010241fe00  signum: 2 (SIGINT)
+[-A]   signal    0x000000010241fef0  signum: 15 (SIGTERM)
+[-A]   signal    0x000000010241ffe0  signum: 26 (SIGVTALRM)
+[-A]   signal    0x00000001024200d0  signum: 24 (SIGXCPU)
+[-A]   signal    0x00000001024201c0  signum: 25 (SIGXFSZ)
+[-A]   signal    0x00000001024202b0  signum: 31 (SIGUSR2)
+[-A]   signal    0x00000001024203a0  signum: 5 (SIGTRAP)
+[-A]   signal    0x0000000102420490  signum: 12 (SIGSYS)
+[-A]   signal    0x0000000102420580  signum: 3 (SIGQUIT)
+[-A]   signal    0x0000000102420670  signum: 6 (SIGABRT)
+[RA]   timer     0x0000000102502d50  repeat: 0, timeout in: 80 ms
+[R-]   timer     0x000000010232e0c0  repeat: 0, timeout expired: 205119 ms ago
+[-A]   async     0x0000000104f2ced8  
+[R-]   timer     0x0000000102506610  repeat: 0, timeout in: 43872811698461 ms
+[RA]   prepare   0x0000000104f2ce08  
+[R-]   timer     0x000000010241ede0  repeat: 0, timeout in: 4291821444 ms
+[-A]   tcp       0x0000000102417b20  localhost:58116 connected to localhost:7051, send buffer size: 146808, recv buffer size: 398440, file descriptor: 15, write queue size: 0, readable, writable
+[-A]   tcp       0x0000000102412810  localhost:58117 connected to localhost:7051, send buffer size: 146808, recv buffer size: 388157, file descriptor: 16, write queue size: 0, readable, writable
+[-A]   timer     0x000000010240c330  repeat: 0, timeout in: 154859 ms
+[RA]   timer     0x0000000102503560  repeat: 0, timeout in: 94892 ms
+[-A]   timer     0x0000000102614390  repeat: 0, timeout in: 4406 ms
+
+================================================================================
+==== System Information ========================================================
+
+Environment variables
+  TERM_PROGRAM=Apple_Terminal
+  NVM_CD_FLAGS=
+  SHELL=/bin/bash
+  TERM=xterm-256color
+  TMPDIR=/var/folders/h3/k99ks6b5551cllf105bfr_l40000gn/T/
+  GOBIN=/Users/panxy/go/bin
+  Apple_PubSub_Socket_Render=/private/tmp/com.apple.launchd.nHnXQQaUmY/Render
+  TERM_PROGRAM_VERSION=400
+  OLDPWD=/Users/panxy
+  TERM_SESSION_ID=0E7DEC5D-E324-4755-8DA4-0773A90DF620
+  NVM_DIR=/Users/panxy/.nvm
+  USER=panxy
+  SSH_AUTH_SOCK=/private/tmp/com.apple.launchd.IBbL8tiSgI/Listeners
+  PATH=/Users/panxy/.nvm/versions/node/v8.12.0/bin:/Library/Java/JavaVirtualMachines/jdk-9.0.4.jdk/Contents/Home/bin:/Users/panxy/anaconda3/bin:/Library/Frameworks/Python.framework/Versions/2.7/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/TeX/texbin:/usr/local/go/bin:/Applications/Postgres.app/Contents/Versions/latest/bin:/usr/local/mysql/bin:/Users/panxy/go/bin:/usr/local/Cellar/chromedriver
+  PWD=/Users/panxy/ipnet_blockchain/blockchain
+  JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk-9.0.4.jdk/Contents/Home
+  LANG=zh_CN.UTF-8
+  FABRIC_BIN=/Users/panxy/go/src/github.com/hyperledger/fabric-samples/bin
+  XPC_FLAGS=0x0
+  XPC_SERVICE_NAME=0
+  SHLVL=1
+  HOME=/Users/panxy
+  COMPOSER_ROOT=/Users/panxy/HyperledgerComposer
+  LOGNAME=panxy
+  NVM_BIN=/Users/panxy/.nvm/versions/node/v8.12.0/bin
+  GOPATH=/Users/panxy/go
+  _=/Users/panxy/.nvm/versions/node/v8.12.0/bin/composer
+
+Resource limits                        soft limit      hard limit
+  core file size (blocks)                       0       unlimited
+  data seg size (kbytes)                unlimited       unlimited
+  file size (blocks)                    unlimited       unlimited
+  max locked memory (bytes)             unlimited       unlimited
+  max memory size (kbytes)              unlimited       unlimited
+  open files                                10240       unlimited
+  stack size (bytes)                      8388608        67104768
+  cpu time (seconds)                    unlimited       unlimited
+  max user processes                          709            1064
+  virtual memory (kbytes)               unlimited       unlimited
+
+Loaded libraries
+  /Users/panxy/.nvm/versions/node/v8.12.0/bin/node
+  /System/Library/Frameworks/CoreFoundation.framework/Versions/A/CoreFoundation
+  /usr/lib/libSystem.B.dylib
+  /usr/lib/libc++.1.dylib
+  /usr/lib/libDiagnosticMessagesClient.dylib
+  /usr/lib/libicucore.A.dylib
+  /usr/lib/libobjc.A.dylib
+  /usr/lib/libz.1.dylib
+  /usr/lib/system/libcache.dylib
+  /usr/lib/system/libcommonCrypto.dylib
+  /usr/lib/system/libcompiler_rt.dylib
+  /usr/lib/system/libcopyfile.dylib
+  /usr/lib/system/libcorecrypto.dylib
+  /usr/lib/system/libdispatch.dylib
+  /usr/lib/system/libdyld.dylib
+  /usr/lib/system/libkeymgr.dylib
+  /usr/lib/system/liblaunch.dylib
+  /usr/lib/system/libmacho.dylib
+  /usr/lib/system/libquarantine.dylib
+  /usr/lib/system/libremovefile.dylib
+  /usr/lib/system/libsystem_asl.dylib
+  /usr/lib/system/libsystem_blocks.dylib
+  /usr/lib/system/libsystem_c.dylib
+  /usr/lib/system/libsystem_configuration.dylib
+  /usr/lib/system/libsystem_coreservices.dylib
+  /usr/lib/system/libsystem_darwin.dylib
+  /usr/lib/system/libsystem_dnssd.dylib
+  /usr/lib/system/libsystem_info.dylib
+  /usr/lib/system/libsystem_m.dylib
+  /usr/lib/system/libsystem_malloc.dylib
+  /usr/lib/system/libsystem_network.dylib
+  /usr/lib/system/libsystem_networkextension.dylib
+  /usr/lib/system/libsystem_notify.dylib
+  /usr/lib/system/libsystem_sandbox.dylib
+  /usr/lib/system/libsystem_secinit.dylib
+  /usr/lib/system/libsystem_kernel.dylib
+  /usr/lib/system/libsystem_platform.dylib
+  /usr/lib/system/libsystem_pthread.dylib
+  /usr/lib/system/libsystem_symptoms.dylib
+  /usr/lib/system/libsystem_trace.dylib
+  /usr/lib/system/libunwind.dylib
+  /usr/lib/system/libxpc.dylib
+  /usr/lib/closure/libclosured.dylib
+  /usr/lib/libc++abi.dylib
+  /System/Library/CoreServices/Encodings/libSimplifiedChineseConverter.dylib
+  /Users/panxy/.nvm/versions/node/v8.12.0/lib/node_modules/composer-cli/node_modules/node-report/api.node
+  /Users/panxy/.nvm/versions/node/v8.12.0/lib/node_modules/composer-cli/node_modules/grpc/src/node/extension_binary/node-v57-darwin-x64-unknown/grpc_node.node
+
+================================================================================

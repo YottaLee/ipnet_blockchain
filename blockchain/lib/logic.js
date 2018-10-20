@@ -1,6 +1,65 @@
 'use strict';
 
+/**
+ * Adding Ip 添加IP
+ * @param {org.acme.ipregistry.AddAssetIP} iptrans
+ * @transaction
+ */
 
+function addAssetIP(iptrans){
+  var newip = iptrans.ip
+  return getAssetRegistry("org.acme.ipregistry.IPEstate")
+        .then(assetRegistry => {
+            return assetRegistry.add(newip)
+          })
+}
+
+
+
+/**
+ * Adding Loan 添加Loan
+ * @param {org.acme.ipregistry.AddAssetLoan} loantrans
+ * @transaction
+ */
+
+function addAssetLoan(loantrans){
+  var newloan = loantrans.loan
+  return getAssetRegistry("org.acme.ipregistry.Loan")
+        .then(assetRegistry => {
+            return assetRegistry.add(newloan)
+          })
+}
+
+
+/**
+ * Adding Loan 添加Loan
+ * @param {org.acme.ipregistry.AddAssetInsurance} insurancetrans
+ * @transaction
+ */
+
+function addAssetInsurance(insurancetrans){
+  var newinsurance = insurancetrans.insurance
+  return getAssetRegistry("org.acme.ipregistry.Insurance")
+        .then(assetRegistry => {
+            return assetRegistry.add(newinsurance)
+          })
+}
+
+
+/**
+ * Adding IPPool 添加IPPool
+ * @param {org.acme.ipregistry.AddAssetIPPool} pooltrans
+ * @transaction
+ */
+// 专利池
+
+function AddAssetIPPool(pooltrans){
+  var newpool = pooltrans.ippool
+  return getAssetRegistry("org.acme.ipregistry.IPPool")
+        .then(assetRegistry => {
+            return assetRegistry.add(newpool)
+          })
+}
 
 /**
  * Adding Ip agent  给IP添加IPAgent
@@ -16,6 +75,7 @@ function addIPEStateAgent(addagent){
     ip.poolID = addagent.poolID
     index = pool.size()
     pool[index] = addagent.ipID
+    
   }
   Promise.all([
     getAssetRegistry('org.acme.ipregistry.IPEstate'),

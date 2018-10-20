@@ -202,3 +202,19 @@ transaction Outpool {
   o String ipID                         //IP知识产权
   o String poolID                       //IP池
 }
+
+transaction AddAssetIP{
+  o IPEstate ip
+}
+
+transaction AddAssetLoan{
+  o Loan loan
+}
+
+transaction AddAssetInsurance{
+  o Insurance insurance
+}
+
+transaction AddAssetIPPool{
+  o IPPool ippool
+}
