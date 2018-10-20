@@ -16,6 +16,7 @@ function addIPEStateAgent(addagent){
     ip.poolID = addagent.poolID
     index = pool.size()
     pool[index] = addagent.ipID
+    
   }
   Promise.all([
     getAssetRegistry('org.acme.ipregistry.IPEstate'),
