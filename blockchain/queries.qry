@@ -1,0 +1,13 @@
+query selectHistorianRecordsByTime {
+  description: "Select historian records by time"
+  statement:
+    SELECT org.hyperledger.composer.system.HistorianRecord
+    WHERE (transactionTimestamp > _$justnow)
+}
+
+query selectHistorianRecordsByType {
+	description: "Select historian records by type"
+	statement:
+		SELECT org.hyperledger.composer.system.HistorianRecord
+    	WHERE (transactionType == 'AddAsset' OR transactionType == 'UpdateAsset' OR transactionType == 'RemoveAsset')
+}

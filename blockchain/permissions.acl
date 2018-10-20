@@ -1,0 +1,192 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+rule NetworkAdminUser {
+    description: "Grant business network administrators full access to user resources"
+    participant: "org.hyperledger.composer.system.NetworkAdmin"
+    operation: ALL
+    resource: "**"
+    action: ALLOW
+}
+
+rule NetworkAdminSystem {
+    description: "Grant business network administrators full access to system resources"
+    participant: "org.hyperledger.composer.system.NetworkAdmin"
+    operation: ALL
+    resource: "org.hyperledger.composer.system.**"
+    action: ALLOW
+}
+rule Default {
+    description: "Allow all participants access to all resources"
+    participant: "ANY"
+    operation: ALL
+    resource: "org.acme.ipregistry.*"
+    action: ALLOW
+}
+
+rule SystemACL {
+  description:  "System ACL to permit all access"
+  participant: "ANY"
+  operation: ALL
+  resource: "org.hyperledger.composer.system.**"
+  action: ALLOW
+}
+
+
+
+/* common */
+
+rule CommonReadTransactionRegistry {
+  description: "Allow all participants to read transaction registry"
+  participant: "org.hyperledger.composer.system.Participant"
+  operation: READ
+  resource: "org.hyperledger.composer.system.TransactionRegistry"
+  action: ALLOW
+}
+
+rule CommonReadParticipantRegistry {
+    description: "Allow all participants to read participant registry"
+    participant: "org.hyperledger.composer.system.Participant"
+    operation: READ
+    resource: "org.hyperledger.composer.system.ParticipantRegistry"
+    action: ALLOW
+}
+
+rule CommonReadAssetRegistry {
+    description: "Allow all participants to read asset registry"
+    participant: "org.hyperledger.composer.system.Participant"
+    operation: READ
+    resource: "org.hyperledger.composer.system.AssetRegistry"
+    action: ALLOW
+}
+
+rule CommonReadNetwork {
+    description: "Allow all participants to read network"
+    participant: "org.hyperledger.composer.system.Participant"
+    operation: READ
+    resource: "org.hyperledger.composer.system.Network"
+    action: ALLOW
+}
+
+
+/* PrivateIndividual */
+
+rule PrivateIndividualReadOwnIPs {
+    description: "Allow PrivateIndividuals to view their IPs"
+    participant(p): "org.acme.ipregistry.PrivateIndividual"
+    operation: READ
+    resource(t): "org.acme.ipregistry.IPEstate"
+    condition: (t.owner.getIdentifier() == p.getIdentifier())
+    action: ALLOW
+}
+
+rule PrivateIndividualReadOwnLoans {
+    description: "Allow clients to view loans they own"
+    participant(c): "org.acme.ipregistry.PrivateIndividual"
+    operation: READ
+    resource(s): "org.acme.ipregistry.Loan"
+    condition: (s.debtor.getIdentifier() == c.getIdentifier())
+    action: ALLOW  
+}
+
+rule PrivateIndividualReadOwnInsurances {
+    description: "Allow clients to view Insurances they own"
+    participant(c): "org.acme.ipregistry.PrivateIndividual"
+    operation: READ
+    resource(s): "org.acme.ipregistry.Insurance"
+    condition: (s.insured.getIdentifier() == c.getIdentifier())
+    action: ALLOW  
+}
+
+rule PrivateIndividualReadOwnPrivateIndividual {
+    description: "Allow PrivateIndividuals to view their info"
+    participant(c): "org.acme.ipregistry.PrivateIndividual"
+    operation: READ
+    resource(cc): "org.acme.ipregistry.PrivateIndividual"
+    condition: (cc.getIdentifier() == c.getIdentifier())
+    action: ALLOW  
+}
+
+rule PrivateIndividualReadIPEstateAgents {
+    description: "Allow PrivateIndividuals to view IPEstateAgents"
+    participant: "org.acme.ipregistry.PrivateIndividual"
+    operation: READ
+    resource: "org.acme.ipregistry.IPEstateAgent"
+    action: ALLOW
+}
+
+rule PrivateIndividualReadBuyingHistorianRecord {
+    description: "Allow clients to view their buying historian records"
+    participant(c): "org.acme.ipregistry.PrivateIndividual"
+    operation: READ
+    resource(hr): "org.hyperledger.composer.system.HistorianRecord"
+    condition: (hr.transactionType == "org.acme.ipregistry.BuyingIPEstate" 
+      && (hr.transactionInvoked.buyer.getIdentifier() == c.getIdentifier() || hr.transactionInvoked.seller.getIdentifier() == c.getIdentifier()))
+    action: ALLOW
+}
+
+rule PrivateIndividualReadLoanHistorianRecord {
+    description: "Allow clients to view their loan historian records"
+    participant(c): "org.acme.ipregistry.PrivateIndividual"
+    operation: READ
+    resource(hr): "org.hyperledger.composer.system.HistorianRecord"
+    condition: (hr.transactionType == "org.acme.ipregistry.ContractingLoan" 
+      && hr.transactionInvoked.debtor.getIdentifier() == c.getIdentifier() )
+    action: ALLOW
+}
+
+rule PrivateIndividualReadInsuranceHistorianRecord {
+    description: "Allow clients to view their insurance historian records"
+    participant(c): "org.acme.ipregistry.PrivateIndividual"
+    operation: READ
+    resource(hr): "org.hyperledger.composer.system.HistorianRecord"
+    condition: (hr.transactionType == "org.acme.ipregistry.ContractingInsurance" 
+      && hr.transactionInvoked.insured.getIdentifier() == c.getIdentifier())
+    action: ALLOW
+}
+
+rule PrivateIndividualAddAsset {
+    description: "Allow PrivateIndividual to add assets to registry"
+    participant: "org.acme.ipregistry.PrivateIndividual"
+    operation: CREATE
+    resource: "org.hyperledger.composer.system.AddAsset"
+    action: ALLOW  
+}
+
+/* IPEstateAgent */
+
+rule IPEstateAgentManagePrivateIndividual {
+    description: "Allow IPEstateAgents to read all PrivateIndividuals"
+    participant: "org.acme.ipregistry.IPEstateAgent"
+    operation: ALL
+    resource: "org.acme.ipregistry.PrivateIndividual"
+    action: ALLOW
+}
+
+rule IPEstateAgentManageOwnBuying {
+    description: "Allow IPEstateAgents to manage their BuyingIPEstate"
+    participant(t): "org.acme.ipregistry.IPEstateAgent"
+    operation: ALL
+    resource(tt): "org.acme.ipregistry.BuyingIPEstate"
+    condition: (tt.ipEstateAgent.getIdentifier() == t.getIdentifier())
+    action: ALLOW
+}
+
+rule IPEstateAgentAddAsset {
+    description: "Allow IPEstateAgents to add assets to registry"
+    participant: "org.acme.ipregistry.IPEstateAgent"
+    operation: CREATE
+    resource: "org.hyperledger.composer.system.AddAsset"
+    action: ALLOW  
+}

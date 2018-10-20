@@ -1,0 +1,204 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/**
+ * Write your model definitions here
+ */
+
+ /*
+ * Business network model
+ */
+
+namespace org.acme.ipregistry
+
+
+
+/**********************************************************
+参与者
+ ********************************************************/
+
+//  个人用户
+participant PrivateIndividual identified by id {
+  o String id
+  o String name
+  o Double balance default = 0.0
+}
+
+// 银行
+participant Bank identified by id {
+  o String id
+  o String name
+  o Double balance default = 0.0
+}
+
+// 保险公司
+participant InsuranceCompany identified by id {
+  o String id
+  o String name
+  o Double balance default = 0.0
+}
+
+// 评估机构
+participant Notary identified by id {
+  o String id
+  o String name
+  o Double balance default = 0.0
+}
+
+// 专利池代理商
+participant IPEstateAgent identified by id {
+  o String id
+  o String name
+  o Double balance default = 0.0
+  o Double feeRate default = 0.3
+  o String[] poolsID
+}
+
+
+/**********************************************************
+资产
+ ********************************************************/
+
+
+// 知识产权
+asset IPEstate identified by id {
+  o String id                                // IP id
+  o Double price default = 0.0               // IP 当前估值
+  o String ownerID                           // IP 当前拥有者
+  o String agentID                           // IP 当前代理商
+  o String poolID                           // IP 当前所处IP池
+}
+
+// 专利池
+asset IPPool identified by poolId {
+  o String poolId                     //IP池 ID
+  o Integer size                      //IP池 大小
+  o String[] ipID                     //IP池 池内IP
+  o String agentID                    //IP池 所属IP代理商
+}
+
+// 贷款
+asset Loan identified by id {
+  o String id                         //贷款 ID
+  o Double amount                     //贷款金额
+  o Double interestRate               //贷款利率
+  o String debtorID                   //贷款人
+  o String bankID                     //贷款银行
+  o String ipID                       //IP 知识产权
+  o String notaryID                   //评估机构
+  o Integer durationInMonths          //贷款期限
+}
+
+// 保险
+asset Insurance identified by id {
+  o String id                           //保险 ID
+  o String ioanID                       //相应贷款 
+  o String ipID                         //IP知识产权
+  o String notaryID                     //评估机构
+  o String insuredID                    //投保人
+  o String insuranceCompanyID           //保险公司
+  o Double monthlyCost                  //月收费
+  o Integer durationInMonths            //投保月数
+}
+
+
+/**********************************************************
+交易记录
+ ********************************************************/
+
+
+transaction AddIPEstate{                //登记添加IP知识产权
+  o String id                           //交易ID
+  o Double price default = 0.0          //IP 当前估价
+  o String ownerID                      //IP 拥有者
+  o String agentID                      //IP 代理商
+  o String poolID                       //IP 所属IP池
+}
+
+transaction AddIPEstateAgent{
+  o String id                           //交易ID
+  o String ipID                         //IP知识产权
+  o String agentID                      //IP代理商
+  o String poolID                       //PoolID 
+}
+
+transaction AddIPPool{
+  o String id                           //交易ID
+  o String poolId                       //IP池 ID
+  o Integer size                        //IP池 大小
+  o String[] ipID                       //IP池内IP知识产权
+  o String agentID                      //IP池所有者 IP代理商
+}
+
+//  p2p交易
+transaction BuyingIPEstate {
+  o String id                           //交易ID
+  o String buyerID                      //买方 ID
+  o String sellerID                     //卖方 ID
+  o String ipID                         //IP知识产权 ID
+  o String agentID                      //IP代理商 ID
+  o String poolID                       //IPPool ID
+  o Double price default = 0.0          //IP 购买价格
+  o Double ownerRatio default = 0.7     //owner 比例
+  o Double agentRatio default = 0.1     //agent 比例
+}
+
+// 达成保险合同
+transaction ContractingInsurance {
+  o String id                           //交易ID
+  o String insuredID                    //投保人
+  o String insuranceCompanyID           //保险公司
+  o String ipID                         //IP知识产权
+  o String loanID                       //IP 贷款
+  o Double monthlyCost                  //IP 每月
+  o Integer durationInMonths            //投保月数
+}
+
+// 赔偿保险
+transaction CompensatingInsurance {
+  o String id                           //交易ID
+  o String insuranceID                 //赔偿 对应保险
+  o Double compensation                 //赔偿金额
+}
+
+// 贷款
+transaction ContractingLoan {
+  o String id                           //交易ID
+  o String debtorID                     //贷款人
+  o String bankID                       //贷款银行
+  o String ipID                         //IP知识产权
+  o Double interestRate                 //贷款利率
+  o Integer durationInMonths            //贷款贷款
+}
+
+// 赔偿保险
+transaction CompensatingLoan {
+  o String id                           //交易ID
+  o String loanID                       //赔偿 对应贷款
+  o Double payment                      //保险赔偿金额
+}
+
+// IP入池
+transaction Inpool {
+  o String id                           //交易ID
+  o String ipID                         //IP知识产权
+  o String poolID                       //IP池
+}
+
+// IP退池
+transaction Outpool {
+  o String id                           //交易ID
+  o String ipID                         //IP知识产权
+  o String poolID                       //IP池
+}
