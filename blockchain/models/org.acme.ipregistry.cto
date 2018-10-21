@@ -23,7 +23,6 @@
 namespace org.acme.ipregistry
 
 
-
 /**********************************************************
 参与者
  ********************************************************/
@@ -119,7 +118,6 @@ asset Insurance identified by id {
 
 
 transaction AddIPEstate{                //登记添加IP知识产权
-  o String id                           //交易ID
   o Double price default = 0.0          //IP 当前估价
   o String ownerID                      //IP 拥有者
   o String agentID                      //IP 代理商
@@ -127,14 +125,12 @@ transaction AddIPEstate{                //登记添加IP知识产权
 }
 
 transaction AddIPEstateAgent{
-  o String id                           //交易ID
   o String ipID                         //IP知识产权
   o String agentID                      //IP代理商
   o String poolID                       //PoolID 
 }
 
 transaction AddIPPool{
-  o String id                           //交易ID
   o String poolId                       //IP池 ID
   o Integer size                        //IP池 大小
   o String[] ipID                       //IP池内IP知识产权
@@ -143,7 +139,6 @@ transaction AddIPPool{
 
 //  p2p交易
 transaction BuyingIPEstate {
-  o String id                           //交易ID
   o String buyerID                      //买方 ID
   o String sellerID                     //卖方 ID
   o String ipID                         //IP知识产权 ID
@@ -154,9 +149,16 @@ transaction BuyingIPEstate {
   o Double agentRatio default = 0.1     //agent 比例
 }
 
+//购买评估报告
+transaction BuyEvaluationReport{
+  o String ipID                         //专利ID
+  o String holderID                     //专利持有人ID 
+  o String notaryID                     //评估机构ID
+  o Double price default = 20000.0      //评估费用
+}
+
 // 达成保险合同
 transaction ContractingInsurance {
-  o String id                           //交易ID
   o String insuredID                    //投保人
   o String insuranceCompanyID           //保险公司
   o String ipID                         //IP知识产权
@@ -167,14 +169,12 @@ transaction ContractingInsurance {
 
 // 赔偿保险
 transaction CompensatingInsurance {
-  o String id                           //交易ID
   o String insuranceID                 //赔偿 对应保险
   o Double compensation                 //赔偿金额
 }
 
 // 贷款
 transaction ContractingLoan {
-  o String id                           //交易ID
   o String debtorID                     //贷款人
   o String bankID                       //贷款银行
   o String ipID                         //IP知识产权
@@ -184,21 +184,18 @@ transaction ContractingLoan {
 
 // 赔偿保险
 transaction CompensatingLoan {
-  o String id                           //交易ID
   o String loanID                       //赔偿 对应贷款
   o Double payment                      //保险赔偿金额
 }
 
 // IP入池
 transaction Inpool {
-  o String id                           //交易ID
   o String ipID                         //IP知识产权
   o String poolID                       //IP池
 }
 
 // IP退池
 transaction Outpool {
-  o String id                           //交易ID
   o String ipID                         //IP知识产权
   o String poolID                       //IP池
 }
@@ -217,4 +214,10 @@ transaction AddAssetInsurance{
 
 transaction AddAssetIPPool{
   o IPPool ippool
+}
+
+//提交专利报告
+transaction SubmitIPReport {
+  o String ipID
+  o Double value
 }

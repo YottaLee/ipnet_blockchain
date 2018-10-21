@@ -193,6 +193,34 @@ function buyingIPEstate( trade ){
   })
 }
 
+/**
+ * Defray for the evaluation report
+ * @param {org.acme.ipregistry.BuyEvaluationReport} report
+ * @transaction
+ */
+
+function buyEvaluationReport(report){
+  
+  var holder = getPrivateIndividualByID(report.holderID)
+  var notary = getNotaryByID(report.notaryID)
+  var payment = report.price
+
+  if( holder.balance < payment ){
+    throw new Error('Not enough funds to pay this!')
+  }
+  holder.balance -= payment
+  notary.balance += payment
+  Promise.all([
+    getParticipantRegistry('org.acme.ipregistry.PrivateIndividual'),
+    getParticipantRegistry('org.acme.ipregistry.Notary')
+  ]).then(function(registries){
+    return (
+      registries[0].update(holder),
+      registries[1].update(notary)
+    )
+  })
+}
+
 
 
 
@@ -298,20 +326,25 @@ function contractingLoan( loan ){
   })
  }
 
+/**
+ * submit patent report
+ * @param {org.acme.ipregistry.SubmitIPReport} report
+ * @transaction
+ */
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+function submitIPReport(report){
+  var ipID = report.ipID
+  // Updates the seller's balance
+  var ip = getIPByID(ipID)
+  ip.price = report.value
+  Promise.all([
+    getParticipantRegistry('org.acme.ipregistry.IPEstate')
+  ]).then(function(registries){
+    return (
+      registries[0].update(ip)
+    )
+  })
+}
 
 /*
  *是否存在该id的IP
