@@ -3,7 +3,7 @@
     "composer": "^0.19.16"
   },
   "name": "ipnet",
-  "version": "0.0.6",
+  "version": "0.0.1",
   "description": "Gy",
   "scripts": {
     "prepublish": "mkdirp ./dist && composer archive create --sourceType dir --sourceName . -a ./dist/ipnet.bna",
