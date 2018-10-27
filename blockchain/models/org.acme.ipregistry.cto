@@ -95,7 +95,7 @@ asset Loan identified by id {
   o String debtorID                   //贷款人
   o String bankID                     //贷款银行
   o String ipID                       //IP 知识产权
-  o String notaryID                   //评估机构
+  o Double compensation               //赔偿
   o Integer durationInMonths          //贷款期限
 }
 
