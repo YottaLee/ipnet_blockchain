@@ -169,7 +169,6 @@ transaction ContractingInsurance {
 // 赔偿保险
 transaction CompensatingInsurance {
   o String insuranceID                 //赔偿 对应保险
-  o Double compensation                 //赔偿金额
 }
 
 // 贷款

@@ -255,22 +255,29 @@ function buyEvaluationReport(report){
  */
 
  function compensatingInsurance( compensatinginsurance ){
-  var insurance = compensatinginsurance.insurance
+  var insurance = getInsuranceByID(compensatinginsurance.insuranceID) 
+  var loanID = insurance.ioanID
+  var loan = getLoanByID(loanID)
   // Updates the seller's balance
-  var payment = compensatinginsurance.compensation
-  insurance.insured.balance += payment
+  var payment = loan.compensation
+  insurance.insured.balance -= payment
+  loan.bankID.balance += payment
   // Check if the buyer has enough to pay the notary, real estate agent and insurance
   if( insurance.insuranceCompany.balance < payment ){
     throw new Error('Not enough funds to compensate this!')
   }
-  insurance.insuranceCompany.balance -= payment
+  var patentID = insurance.ipID;
+  var patent = getIPByID(patentID);
+  patent.ownerID = insurance.insuredID
   Promise.all([
-    getParticipantRegistry('org.acme.ipregistry.PrivateIndividual'),
+    getParticipantRegistry('org.acme.ipregistry.IPEstate'),
+    getParticipantRegistry('org.acme.ipregistry.Bank'),
     getParticipantRegistry('org.acme.ipregistry.InsuranceCompany')
   ]).then(function(registries){
     return (
-      registries[0].update(insurance.insured),
-      registries[1].update(insurance.insuranceCompany)
+      registries[0].update(patent),
+      registries[1].update(getBankByID(loan.bankID)),
+      registries[2].update(getInsuranceCompanyByID(insurance.insuranceCompanyID)) 
     )
   })
  }
